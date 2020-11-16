@@ -1,16 +1,14 @@
 from django.contrib       import admin
 from django.contrib.admin import AdminSite
-from .models              import Team, Teammitglied, Auftritt, Person
+from .models              import Teammitglied, Auftritt, Person, Produktion
 
 
 AdminSite.site_header = ""
 AdminSite.site_title  = "Wiener Festwochen-Verwaltungstool"
-AdminSite.
+AdminSite.sit_title = "Verwaltung"
 
 
-class Inline(admin.TabularInline):
-    model = Team
-    extra = 0
+
 
 
 class BestellInline(admin.TabularInline):
@@ -18,55 +16,55 @@ class BestellInline(admin.TabularInline):
     extra = 0
 
 
-class TeamAdmin(admin.ModelAdmin):
-    list_display =       ('id')
-    list_display_links = ('id')
-    ordering =      ['id']
-    list_filter =   ['id']
-    search_fields = ['id']
-    fieldsets = [
-        ('Fachbereichs-Daten', {'fields': [('KBEZ', 'LBEZ')]}),
-        ('Detailinformation',  {'fields': ['Gebaeude'], 'classes': ['collapse']}),
-    ]
-    inlines = [TeamInline]
+
 
 
 class TeammitgliedAdmin(admin.ModelAdmin):
-    list_display =       ('id', 'Fachbereich', 'Stundenlohn')
-    list_display_links = ('id', 'Fachbereich','Stundenlohn')
-    ordering =      ['id']
-    list_filter =   ['FS_id', 'FS_id']
-    search_fields = ['Zuname']
+    list_display =       ('TMID', 'Fachbereich', 'Stundenlohn')
+    list_display_links = ('TMID', 'Fachbereich','Stundenlohn')
+    ordering =      ['TMID']
+    list_filter =   ['FS_PID', 'FS_PID']
+    search_fields = ['Fachbereich']
     fieldsets = [
-        ('HSL-Daten',         {'fields': [('Zuname', 'Vorname'), 'FS_KBEZ']}),
-        ('Detailinformation', {'fields': ['Geburtstag']}),
+        ('Fachbereichsdaten',         {'fields': ['Fachbereich']}),
+        ('Stundenlohndaten', {'fields': ['Stundenlohn']}),
     ]
     inlines = [BestellInline]
 
 
 class AuftrittAdmin(admin.ModelAdmin):
-    list_display =       ('id', 'Zeit')
-    list_display_links = ('id', 'Zeit')
-    ordering =      ['id']
-    list_filter =   ['','Zeit']
-    search_fields = ['Zeit']
+    list_display =       ('AuftrittiD', 'Zeit', 'FS_TID')
+    list_display_links = ('AuftrittiD', 'Zeit', 'FS_TID')
+    ordering =      ['AuftrittiD']
+    list_filter =   ['Zeit']
+    search_fields = ['Auftrittid']
     fieldsets = [
-        ('Bier-Daten', {'fields': ['Bezeichnung', 'Sorte', 'Art']}),
-        ('',           {'fields': ['Preis']}),
+        ('Auftrittdaten', {'fields': ['Beginn des Auftritts']}),
+
     ]
     inlines = [BestellInline]
 
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('id', 'FS_PNR', 'FS_BNR', "Menge",'Zeit')
-    ordering =      ['-Zeit', '-id']
-    list_filter =   ['Ort', 'Zeit']
-    search_fields = ['Ort']
+    list_display = ('PID', 'Pname', 'ist_extern')
+    ordering =      ['PID', 'PID']
+    list_filter =   ['Pname', 'Pname']
+    search_fields = ['Pname','PID']
     fieldsets = [
-        ('Bestell-Daten', {'fields': [('FS_PNR', 'FS_BNR', 'Menge')]}),
-        ('',              {'fields': [('Ort', 'Zeit')]}),
-    ]
+        ('Personen-Daten', {'fields': [('PID', 'Pname', 'ist_extern','FS_TID')]}),
 
+    ]
+class ProduktionAdmin(admin.ModelAdmin):
+    list_display =       ('Produktionid', 'Titel','Leitung')
+    list_display_links = ('Produktionid', 'Titel','Leitung')
+    ordering =      ['Produktionid']
+    list_filter =   ['Produktionid','Titel','Leitung']
+    search_fields = ['Produktionid','Titel','Leitung']
+    fieldsets = [
+        ('Produktionsdaten', {'fields': ['Produktionid', 'Titel', 'Leitung']}),
+
+    ]
+    inlines = [BestellInline]
 
 
 
