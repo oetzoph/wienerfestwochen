@@ -1,0 +1,56 @@
+{% extends 'wienerfestwochen/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+    Produktionen verwalten
+{% endblock %}
+
+
+{% block Formular-Überschrift %}
+    <h1 align = "center">Produktionen verwalten</h1>
+{% endblock %}
+
+
+{% block Seiten-Inhalt %}
+	<p>Das ist jetzt mal ein Erfassungsformular für eine neue Produktion (Einfügen, Ansehen)!</p>
+
+	<p>
+	<form action="/Produktion/" method="POST">
+    <div class="form-group">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<input type="submit" value="Neue Produktion abspeichern" / >
+    </div>
+	</form>
+	</p>
+
+	<table border="2">
+
+		<tr>
+			<th>ID</th>
+			<th>Titel</th>
+			<th>Typ</th>
+			<th>Dauer</th>
+      <th>Leitung</th>
+      <th>Sprache</th>
+      <th>hat_Untertitel</th>
+		</tr>
+
+		{% for Produktion in prods %}
+			<tr>
+				<td align="right"> {{Produktion.id}}</td>
+				<td align="left">  {{Produktion.Titel}}</td>
+				<td align="center">{{Produktion.Typ}}</td>
+				<td align="Right"> {{Produktion.Dauer}}</td>
+        <td align="Left"> {{Produktion.Leitung}}</td>
+        <td align="Center"> {{Produktion.Sprache}}</td>
+        <td align="right"> {{Produktion.hat_Untertitel}}</td>
+			</tr>
+		{% endfor %}
+
+	</table>
+
+
+{% endblock %}

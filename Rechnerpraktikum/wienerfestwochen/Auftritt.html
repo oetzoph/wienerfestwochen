@@ -1,0 +1,40 @@
+{% extends 'wienerfestwochen/base.html' %}
+
+{% block title %}
+    Auftritte verwalten
+{% endblock %}
+
+{% block Formular-Überschrift %}
+    <h1><a href="/">Auftritte verwalten</a></h1>
+{% endblock %>
+
+{% block Seiten-Inhalt %}
+    <p>
+        <form action="/Auftritt/" method="POST">
+                {%csrf_token %}
+                {{form}}
+                <input type="submit" value="Neuen Auftritt abspeichern"/>
+        </form>
+    </p>
+    <table border="15" cellspacing="5" cellpassing="5">
+        <tr>
+            <th>AuftrittID</th>
+            <th>Zeit</th>
+            <th>TeamID</th>
+        </tr>
+        {% for auftritt in auftritte %}
+            <tr>
+                <td align="right">{{auftritt.AuftrittID}}</td>
+                <td align="left">{{auftritt.Zeit}}</td>
+                <td align="center">{{auftritt.TeamID}}</td>
+            </tr>
+
+            {%endfor %}
+
+
+    </table>
+{% endblock %}
+
+{ block Buttons %}
+<p><a href="{ url 'wienerfestwochen:indes' %}"><button>Home</button></a></p>
+{% endblock %}

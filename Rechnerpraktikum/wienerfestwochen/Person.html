@@ -1,0 +1,40 @@
+{% extends 'wienerfestwochen/base.html' %}
+
+{% block title %}
+    Personen verwalten
+{% endblock %}
+
+{% block Formular-Überschrift %}
+    <h1><a href="/">Personen verwalten</a></h1>
+{% endblock %>
+
+{% block Seiten-Inhalt %}
+    <p>
+        <form action="/Person/" method="POST">
+                {%csrf_token %}
+                {{form}}
+                <input type="submit" value="Neue Person abspeichern"/>
+        </form>
+    </p>
+    <table border="15" cellspacing="5" cellpassing="5">
+        <tr>
+            <th>PersonID</th>
+            <th>PName</th>
+            <th>ist_extern</th>
+        </tr>
+        {% for Person in Personen %}
+            <tr>
+                <td align="right">{{person.PID}}</td>
+                <td align="left">{{person.Pname}}</td>
+                <td align="center">{{person.ist_extern}}</td>
+            </tr>
+
+            {%endfor %}
+
+
+    </table>
+{% endblock %}
+
+{ block Buttons %}
+<p><a href="{ url 'wienerfestwochen:index' %}"><button>Home</button></a></p>
+{% endblock %}

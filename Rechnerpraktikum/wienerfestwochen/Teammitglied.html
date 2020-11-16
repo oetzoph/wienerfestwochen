@@ -1,0 +1,40 @@
+{% extends 'wienerfestwochen/base.html' %}
+
+{% block title %}
+    Teammitglieder verwalten
+{% endblock %}
+
+{% block Formular-Überschrift %}
+    <h1><a href="/">Teammitglieder verwalten</a></h1>
+{% endblock %>
+
+{% block Seiten-Inhalt %}
+    <p>
+        <form action="/Teammitglieder/" method="POST">
+                {%csrf_token %}
+                {{form}}
+                <input type="submit" value="Neues Teammitglied abspeichern"/>
+        </form>
+    </p>
+    <table border="15" cellspacing="5" cellpassing="5">
+        <tr>
+            <th>TMID</th>
+            <th>Fachbereich</th>
+            <th>Stundenlohn</th>
+        </tr>
+        {% for Teammitglied in Teammitglieder %}
+            <tr>
+                <td align="right">{{teammitglied.TMID}}</td>
+                <td align="left">{{teammitglied.Fachbereich}}</td>
+                <td align="center">{{teammitglied.Stundenlohn}}</td>
+            </tr>
+
+            {%endfor %}
+
+
+    </table>
+{% endblock %}
+
+{ block Buttons %}
+<p><a href="{ url 'wienerfestwochen:index' %}"><button>Home</button></a></p>
+{% endblock %}
